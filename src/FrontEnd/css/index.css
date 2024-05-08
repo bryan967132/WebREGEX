@@ -1,0 +1,8 @@
+.graphs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.graph {
+    height: 95vh;
+    border: 1px solid #000;
+}
