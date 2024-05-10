@@ -14,7 +14,7 @@
 "?"                      {return '?'}
 "("                      {return '('}
 ")"                      {return ')'}
-.                        {}
+.                        {console.log({tipo: 'LEXICO', descripcion: `El caracter "${yytext}" no pertenece al lenguaje`, linea: yylloc.first_line, columna: yylloc.first_column + 1})}
 <<EOF>>                  {return 'EOF'}
 
 /lex

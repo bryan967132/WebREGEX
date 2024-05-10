@@ -761,7 +761,7 @@ case 10:return 16
 break;
 case 11:return 17
 break;
-case 12:
+case 12:console.log({tipo: 'LEXICO', descripcion: `El caracter "${yy_.yytext}" no pertenece al lenguaje`, linea: yy_.yylloc.first_line, columna: yy_.yylloc.first_column + 1})
 break;
 case 13:return 5
 break;
