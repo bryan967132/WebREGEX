@@ -22,11 +22,12 @@
 %{
     var id = 0
     var leaf = 1
+    var buffer = ''
 
     getTree = (op) => {
-        var root = newNode1(id + 1, ".", Type.CONCAT);
+        var root = new Node(id + 1, ".", Type.CONCAT);
         root.left = op;
-        root.right = newNode2(id, "#", Type.LEAF, Type.END);
+        root.right = new Node(id, "#", Type.LEAF, Type.END);
         root.right.anulable = false;
         root.right.i = leaf;
         root.anulable = root.left.anulable && root.right.anulable;
@@ -36,7 +37,7 @@
     }
 
     getNode1 = (value, left, right, anulable, type) => {
-        var root = newNode1(id, value, type);
+        var root = new Node(id, value, type);
         root.anulable = anulable;
         root.left = left;
         root.right = right;
@@ -45,7 +46,7 @@
     }
 
     getNode2 = (op, type, type1) => {
-        var root = newNode2(id, op, type, type1);
+        var root = new Node(id, op, type, type1);
         root.anulable = false;
         root.i = leaf;
         id ++;
@@ -82,4 +83,4 @@ OPERATION :
     OPERATION '?'           {$$ = getNode1($2, $1,   null, true,                       Type.OPTIONAL)} |
     TK_id                   {$$ = getNode2($1, Type.LEAF,  Type.ID    )} |
     TK_string               {$$ = getNode2($1, Type.LEAF,  Type.STRING)} |
-    '(' OPERATION ')'       {$$ = $2} ;
+    '(' OPERATION ')'       {$$ = $2; $$.isGroup = true} ;
