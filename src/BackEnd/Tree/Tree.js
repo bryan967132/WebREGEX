@@ -2,6 +2,12 @@ class Tree {
     constructor(root) {
         this.root = root
         this.transitions = []
+        this.nexts = null
+        this.table = null
+    }
+
+    getRegex = () => {
+        return this.root.getRegex()
     }
 
     calculateFirsts = () => {
@@ -51,6 +57,39 @@ class Tree {
                 node.lasts = [...node.lasts, ...node.right.lasts]
             }
         }
+    }
+
+    calculateNexts = () => {
+        this.nexts = new NextsTable(this.root)
+        this.nexts.calculateNexts()
+    }
+
+    calculateTransitions = () => {
+        this.transitions.push(new Transition(0, "", new Set(this.root.firsts)))
+        this.table = new TransitionTable(this.transitions, this.nexts.leafs)
+        this.table.build()
+        for(const transition of this.table.transitions) {
+            if(transition.nexts.has(this.root.right.i)) {
+                transition.accept = true
+            }
+        }
+    }
+
+    getDotAFD(name) {
+        return `digraph AFD {\n\tgraph[fontname="Arial" labelloc="t"];\n\tnode[shape=circle fontname="Arial"];\n\tedge[fontname="Arial"];\n\trankdir = LR;\n\tlabel="Expresión Regular: ${name}";${this.getStates()}\n}`;
+    }
+
+    getStates() {
+        let nodes = "";
+        for (const transition of this.table.transitions) {
+            for (const [_, change] of transition.changes) {
+                nodes += `\n\tS${transition.state} -> S${change.toState}[label = "${this.terminals(change.terminal)}"];`;
+            }
+            if (transition.accept) {
+                nodes += `\n\tS${transition.state}[peripheries = 2];`;
+            }
+        }
+        return nodes;
     }
 
     getDot = (name) => {

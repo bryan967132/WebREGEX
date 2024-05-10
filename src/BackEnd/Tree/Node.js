@@ -1,42 +1,52 @@
 class Node {
-    constructor() {
+    constructor(id, value, type, type1 = null) {
         this.i = -1
-        this.id = -1
-        this.value = ''
+        this.id = id
+        this.value = type1 ? (type1 === Type.STRING ? value.substring(1, value.length - 1) : value) : value
         this.left = null
         this.right = null
         this.anulable = false
-        this.type = null
-        this.type1 = null
+        this.type = type
+        this.type1 = type1
         this.firsts = []
         this.lasts = []
         this.nexts = []
+        this.isGroup = false
     }
 
     terminals = (terminal) => {
-        return (terminal.equals(" ") ? "\\s" : (terminal.equals("\n") ? "\\n" : terminal));
+        return terminal == " " ? "\\s" : (terminal == "\n" ? "\\n" : terminal);
     }
 
     getDot = () => {
-        return `\n\t\t<tr>\n\t\t\t<td>${this.i}</td>\n\t\t\t<td>${terminals(this.value)}</td>\n\t\t\t<td>${this.nexts ? this.nexts.map(String).join(", ") : "-"}</td>\n\t\t</tr>`
+        return `\n\t\t<tr>\n\t\t\t<td>${this.i}</td>\n\t\t\t<td>${this.terminals(this.value)}</td>\n\t\t\t<td>${this.nexts ? this.nexts.map(String).join(", ") : "-"}</td>\n\t\t</tr>`
     }
-}
 
-newNode1 = (id, value, type) => {
-    const newNode = new Node()
-    newNode.id = id
-    newNode.value = value
-    newNode.type = type
-    return newNode
-}
+    getHTML = () => {
+        return `\n\t\t<tr>\n\t\t\t<td bgcolor="#FFFFFF">${this.i}</td>\n\t\t\t<td bgcolor="#FFFFFF">${this.terminals(this.value)}</td>\n\t\t\t<td bgcolor="#FFFFFF">${this.nexts ? this.nexts.map(String).join(", ") : "-"}</td>\n\t\t</tr>`
+    }
 
-newNode2 = (id, value, type, type1) => {
-    const newNode = new Node()
-    newNode.id = id
-    newNode.value = type1 === Type.STRING ? value.substring(1, value.length - 1) : value
-    newNode.type = type
-    newNode.type1 = type1
-    return newNode
+    getRegex = () => {
+        return this._getRegex(this.left)
+    }
+
+    _getRegex = (node) => {
+        var dot = ''
+        if(node) {
+            dot += this._getRegex(node.left)
+            if(node.type !== Type.CONCAT) {
+                dot += node.value
+                if(node.type1 === Type.STRING) {
+                    dot = `"${dot}"`
+                }
+            }
+            dot += this._getRegex(node.right)
+            if(node.isGroup) {
+                dot = `(${dot})`
+            }
+        }
+        return dot
+    }
 }
 
 const Type = {
