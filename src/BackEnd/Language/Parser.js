@@ -75,8 +75,8 @@ var Parser = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,6],$V1=[1,5],$V2=[2,5,7],$V3=[1,11],$V4=[1,12],$V5=[1,13],$V6=[1,14],$V7=[1,15],$V8=[1,16],$V9=[1,17],$Va=[1,18],$Vb=[2,5,7,10,11,12,13,14,17];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"INIT":3,"REGEXS":4,"EOF":5,"REGEX":6,"TK_id":7,"TK_arrow":8,"OPERATION":9,".":10,"|":11,"*":12,"+":13,"?":14,"TK_string":15,"(":16,")":17,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"TK_id",8:"TK_arrow",10:".",11:"|",12:"*",13:"+",14:"?",15:"TK_string",16:"(",17:")"},
+symbols_: {"error":2,"INIT":3,"REGEXS":4,"EOF":5,"REGEX":6,"TK_id":7,"=":8,"OPERATION":9,".":10,"|":11,"*":12,"+":13,"?":14,"TK_string":15,"(":16,")":17,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"TK_id",8:"=",10:".",11:"|",12:"*",13:"+",14:"?",15:"TK_string",16:"(",17:")"},
 productions_: [0,[3,2],[3,1],[4,2],[4,1],[6,3],[6,1],[9,3],[9,3],[9,2],[9,2],[9,2],[9,1],[9,1],[9,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
@@ -768,7 +768,7 @@ case 13:return 5
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[ \n\r])/,/^(?:[a-zA-Z][a-zA-Z0-9]*\b)/,/^(?:"([^\n\"\\]|\\.)")/,/^(?:-[ ]*>)/,/^(?:\|)/,/^(?:\.)/,/^(?:\*)/,/^(?:\+)/,/^(?:\?)/,/^(?:\()/,/^(?:\))/,/^(?:.)/,/^(?:$)/],
+rules: [/^(?:\s+)/,/^(?:[ \n\r])/,/^(?:[a-zA-Z][a-zA-Z0-9]*\b)/,/^(?:"([^\n\"\\]|\\.)")/,/^(?:=)/,/^(?:\|)/,/^(?:\.)/,/^(?:\*)/,/^(?:\+)/,/^(?:\?)/,/^(?:\()/,/^(?:\))/,/^(?:.)/,/^(?:$)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13],"inclusive":true}}
 });
 return lexer;

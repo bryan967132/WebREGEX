@@ -6,7 +6,7 @@
 [ \n\r]                  {}
 [a-zA-Z][a-zA-Z0-9]*\b   {return 'TK_id'}
 \"([^\n\"\\]|\\.)\"      {return 'TK_string'}
-\-[ ]*\>                 {return 'TK_arrow'}
+"="                      {return '='}
 "|"                      {return '|'}
 "."                      {return '.'}
 "*"                      {return '*'}
@@ -72,8 +72,8 @@ REGEXS :
     REGEX        {$$ = [$1]  } ;
 
 REGEX :
-    TK_id TK_arrow OPERATION {$$ = [$1, getTree($3)]} |
-    error                    {console.log({tipo: 'SINTACTICO', descripcion: `No se esperaba "${yytext}".` ,  linea: this._$.first_line , columna: this._$.first_column + 1})} ;
+    TK_id '=' OPERATION {$$ = [$1, getTree($3)]} |
+    error               {console.log({tipo: 'SINTACTICO', descripcion: `No se esperaba "${yytext}".` ,  linea: this._$.first_line , columna: this._$.first_column + 1})} ;
 
 OPERATION :
     OPERATION '.' OPERATION {$$ = getNode1($2, $1,   $3,   $1.anulable && $3.anulable, Type.CONCAT  )} |
