@@ -1,8 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    background-color: #393939;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.workspace {
+    display: grid;
+    grid-template-columns: 2fr 6fr;
+    height: 90vh;
+}
 .graphs {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 2fr repeat(2, 3fr);
 }
 .graph {
-    height: 95vh;
-    border: 1px solid #000;
+    height: 100%;
+}
+.graph-m {
+    height: 50%;
+}
+.table-title {
+    color: white;
+    line-height: 5pt;
+}
+table {
+    border-collapse: collapse;
+}
+tr td {
+    padding: 3px;
+    text-align: center;
+    border: 1px solid black;
+}
+#editor {
+    max-width: 100%;
+    min-width: 90%;
+    margin: 0 1rem;
+    padding: .1rem;
+    font-size: 10pt;
+    height: 100%;
 }
