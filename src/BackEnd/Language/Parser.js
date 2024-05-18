@@ -72,12 +72,12 @@
   }
 */
 var Parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,6],$V1=[1,5],$V2=[2,5,7],$V3=[1,11],$V4=[1,12],$V5=[1,13],$V6=[1,14],$V7=[1,15],$V8=[1,16],$V9=[1,17],$Va=[1,18],$Vb=[2,5,7,10,11,12,13,14,17];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,6],$V1=[1,5],$V2=[2,5,7],$V3=[1,11],$V4=[1,12],$V5=[1,13],$V6=[1,14],$V7=[1,15],$V8=[1,16],$V9=[1,17],$Va=[1,18],$Vb=[1,19],$Vc=[2,5,7,10,11,12,13,14,18];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"INIT":3,"REGEXS":4,"EOF":5,"REGEX":6,"TK_id":7,"=":8,"OPERATION":9,".":10,"|":11,"*":12,"+":13,"?":14,"TK_string":15,"(":16,")":17,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"TK_id",8:"=",10:".",11:"|",12:"*",13:"+",14:"?",15:"TK_string",16:"(",17:")"},
-productions_: [0,[3,2],[3,1],[4,2],[4,1],[6,3],[6,1],[9,3],[9,3],[9,2],[9,2],[9,2],[9,1],[9,1],[9,3]],
+symbols_: {"error":2,"INIT":3,"REGEXS":4,"EOF":5,"REGEX":6,"TK_id":7,"=":8,"OPERATION":9,".":10,"|":11,"*":12,"+":13,"?":14,"TK_char":15,"TK_string":16,"(":17,")":18,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"TK_id",8:"=",10:".",11:"|",12:"*",13:"+",14:"?",15:"TK_char",16:"TK_string",17:"(",18:")"},
+productions_: [0,[3,2],[3,1],[4,2],[4,1],[6,3],[6,1],[9,3],[9,3],[9,2],[9,2],[9,2],[9,1],[9,1],[9,1],[9,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -116,18 +116,18 @@ break;
 case 11:
 this.$ = getNode1($$[$0], $$[$0-1],   null, true,                       Type.OPTIONAL)
 break;
-case 12:
-this.$ = getNode2($$[$0], Type.LEAF,  Type.ID    )
-break;
-case 13:
-this.$ = getNode2($$[$0], Type.LEAF,  Type.STRING)
+case 12: case 13:
+this.$ = getNode2($$[$0], Type.LEAF, Type.ID    )
 break;
 case 14:
+this.$ = getNode2($$[$0], Type.LEAF, Type.STRING)
+break;
+case 15:
 this.$ = $$[$0-1]; this.$.isGroup = true
 break;
 }
 },
-table: [{2:$V0,3:1,4:2,5:[1,3],6:4,7:$V1},{1:[3]},{2:$V0,5:[1,7],6:8,7:$V1},{1:[2,2]},o($V2,[2,4]),{8:[1,9]},o($V2,[2,6]),{1:[2,1]},o($V2,[2,3]),{7:$V3,9:10,15:$V4,16:$V5},o($V2,[2,5],{10:$V6,11:$V7,12:$V8,13:$V9,14:$Va}),o($Vb,[2,12]),o($Vb,[2,13]),{7:$V3,9:19,15:$V4,16:$V5},{7:$V3,9:20,15:$V4,16:$V5},{7:$V3,9:21,15:$V4,16:$V5},o($Vb,[2,9]),o($Vb,[2,10]),o($Vb,[2,11]),{10:$V6,11:$V7,12:$V8,13:$V9,14:$Va,17:[1,22]},o([2,5,7,10,11,17],[2,7],{12:$V8,13:$V9,14:$Va}),o([2,5,7,11,17],[2,8],{10:$V6,12:$V8,13:$V9,14:$Va}),o($Vb,[2,14])],
+table: [{2:$V0,3:1,4:2,5:[1,3],6:4,7:$V1},{1:[3]},{2:$V0,5:[1,7],6:8,7:$V1},{1:[2,2]},o($V2,[2,4]),{8:[1,9]},o($V2,[2,6]),{1:[2,1]},o($V2,[2,3]),{7:$V3,9:10,15:$V4,16:$V5,17:$V6},o($V2,[2,5],{10:$V7,11:$V8,12:$V9,13:$Va,14:$Vb}),o($Vc,[2,12]),o($Vc,[2,13]),o($Vc,[2,14]),{7:$V3,9:20,15:$V4,16:$V5,17:$V6},{7:$V3,9:21,15:$V4,16:$V5,17:$V6},{7:$V3,9:22,15:$V4,16:$V5,17:$V6},o($Vc,[2,9]),o($Vc,[2,10]),o($Vc,[2,11]),{10:$V7,11:$V8,12:$V9,13:$Va,14:$Vb,18:[1,23]},o([2,5,7,10,11,18],[2,7],{12:$V9,13:$Va,14:$Vb}),o([2,5,7,11,18],[2,8],{10:$V7,12:$V9,13:$Va,14:$Vb}),o($Vc,[2,15])],
 defaultActions: {3:[2,2],7:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
@@ -746,30 +746,32 @@ case 2:return 7
 break;
 case 3:return 15
 break;
-case 4:return 8
+case 4:return 16
 break;
-case 5:return 11
+case 5:return 8
 break;
-case 6:return 10
+case 6:return 11
 break;
-case 7:return 12
+case 7:return 10
 break;
-case 8:return 13
+case 8:return 12
 break;
-case 9:return 14
+case 9:return 13
 break;
-case 10:return 16
+case 10:return 14
 break;
 case 11:return 17
 break;
-case 12:console.log({tipo: 'LEXICO', descripcion: `El caracter "${yy_.yytext}" no pertenece al lenguaje`, linea: yy_.yylloc.first_line, columna: yy_.yylloc.first_column + 1})
+case 12:return 18
 break;
-case 13:return 5
+case 13:console.log({tipo: 'LEXICO', descripcion: `El caracter "${yy_.yytext}" no pertenece al lenguaje`, linea: yy_.yylloc.first_line, columna: yy_.yylloc.first_column + 1})
+break;
+case 14:return 5
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[ \n\r])/,/^(?:[a-zA-Z][a-zA-Z0-9]*\b)/,/^(?:"([^\n\"\\]|\\.)")/,/^(?:=)/,/^(?:\|)/,/^(?:\.)/,/^(?:\*)/,/^(?:\+)/,/^(?:\?)/,/^(?:\()/,/^(?:\))/,/^(?:.)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:[ \n\r])/,/^(?:([a-zA-Z0-9]+))/,/^(?:((\\n|\\t|\\\.|\\s|\\r|\\"|\\')))/,/^(?:("([^\n\"\\]|\\.)*"))/,/^(?:=)/,/^(?:\|)/,/^(?:\.)/,/^(?:\*)/,/^(?:\+)/,/^(?:\?)/,/^(?:\()/,/^(?:\))/,/^(?:.)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"inclusive":true}}
 });
 return lexer;
 })();

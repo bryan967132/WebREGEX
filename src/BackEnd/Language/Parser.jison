@@ -1,21 +1,26 @@
 %lex
 
+ID     [a-zA-Z0-9]+
+STRING \"([^\n\"\\]|\\.)*\"
+CHAR   (\\"n"|\\"t"|\\"."|\\"s"|\\"r"|\\\"|\\\')
+
 %%
 
-\s+                      {}
-[ \n\r]                  {}
-[a-zA-Z][a-zA-Z0-9]*\b   {return 'TK_id'}
-\"([^\n\"\\]|\\.)\"      {return 'TK_string'}
-"="                      {return '='}
-"|"                      {return '|'}
-"."                      {return '.'}
-"*"                      {return '*'}
-"+"                      {return '+'}
-"?"                      {return '?'}
-"("                      {return '('}
-")"                      {return ')'}
-.                        {console.log({tipo: 'LEXICO', descripcion: `El caracter "${yytext}" no pertenece al lenguaje`, linea: yylloc.first_line, columna: yylloc.first_column + 1})}
-<<EOF>>                  {return 'EOF'}
+\s+      {}
+[ \n\r]  {}
+{ID}     {return 'TK_id'}
+{CHAR}   {return 'TK_char'}
+{STRING} {return 'TK_string'}
+"="      {return '='}
+"|"      {return '|'}
+"."      {return '.'}
+"*"      {return '*'}
+"+"      {return '+'}
+"?"      {return '?'}
+"("      {return '('}
+")"      {return ')'}
+.        {console.log({tipo: 'LEXICO', descripcion: `El caracter "${yytext}" no pertenece al lenguaje`, linea: yylloc.first_line, columna: yylloc.first_column + 1})}
+<<EOF>>  {return 'EOF'}
 
 /lex
 
@@ -81,6 +86,7 @@ OPERATION :
     OPERATION '*'           {$$ = getNode1($2, $1,   null, true,                       Type.KLEENE  )} |
     OPERATION '+'           {$$ = getNode1($2, $1,   null, $1.anulable,                Type.POSITIVE)} |
     OPERATION '?'           {$$ = getNode1($2, $1,   null, true,                       Type.OPTIONAL)} |
-    TK_id                   {$$ = getNode2($1, Type.LEAF,  Type.ID    )} |
-    TK_string               {$$ = getNode2($1, Type.LEAF,  Type.STRING)} |
+    TK_id                   {$$ = getNode2($1, Type.LEAF, Type.ID    )} |
+    TK_char                 {$$ = getNode2($1, Type.LEAF, Type.ID    )} |
+    TK_string               {$$ = getNode2($1, Type.LEAF, Type.STRING)} |
     '(' OPERATION ')'       {$$ = $2; $$.isGroup = true} ;
