@@ -1,7 +1,6 @@
 var editor = CodeMirror(document.getElementById('editor'), {
-    mode: "text/x-c++src",
-    theme: "visual-studio",
-    // theme: "git-hub",
+    mode: "EXREGAN",
+    theme: "eclipse",
     lineNumbers: true,
     indentUnit: 0,
     indentWithTabs: true,
