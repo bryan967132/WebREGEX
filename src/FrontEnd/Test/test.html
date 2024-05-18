@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor de Código</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <style>
+        .cm-s-eclipse.CodeMirror {
+            background: rgb(47, 47, 47);
+            color: #ffffff;
+        }
+        .cm-s-eclipse div.CodeMirror-selected {
+            background: rgb(38, 79, 120);
+        }
+        .cm-s-eclipse .CodeMirror-line::selection,
+        .cm-s-eclipse .CodeMirror-line > span::selection,
+        .cm-s-eclipse .CodeMirror-line > span > span::selection {
+            background: rgb(47, 47, 47);
+        }
+        .cm-s-eclipse .CodeMirror-line::-moz-selection,
+        .cm-s-eclipse .CodeMirror-line > span::-moz-selection,
+        .cm-s-eclipse .CodeMirror-line > span > span::-moz-selection {
+            background: rgb(47, 47, 47);
+        }
+        .cm-s-eclipse .CodeMirror-gutters {
+            background: rgb(47, 47, 47);
+            border-right: 0;
+        }
+        .cm-s-eclipse .CodeMirror-guttermarker {
+            color: #fff;
+        }
+        .cm-s-eclipse .CodeMirror-guttermarker-subtle {
+            color: #d0d0d0;
+        }
+        .cm-s-eclipse .CodeMirror-linenumber {
+            color: #cecece;
+        }
+        .cm-s-eclipse .CodeMirror-cursor {
+            border-left: 1px solid #f8f8f0;
+        }
+        .cm-s-eclipse span.cm-group-1 { color: rgb(255, 255, 255); }
+        .cm-s-eclipse span.cm-group-2 { color: rgb(255, 255, 255); }
+        .cm-s-eclipse span.cm-group-3 { color: rgb(255, 255, 255); }
+        .cm-s-eclipse span.cm-integer { color: rgb(167, 236, 33); }
+        .cm-s-eclipse span.cm-var-l { color: rgb(18, 144, 195); }
+        .cm-s-eclipse span.cm-var-r { color: rgb(243, 236, 121); }
+        .cm-s-eclipse span.cm-operator { color: rgb(177, 102, 218); }
+        .cm-s-eclipse span.cm-String { color: rgb(23, 198, 163); }
+        .cm-s-eclipse span.cm-Char { color: rgb(23, 255, 163); }
+        .cm-s-eclipse span.cm-error {
+            background: #f92672;
+            color: #f8f8f0;
+        }
+        .cm-s-eclipse .CodeMirror-activeline-background {
+            background: #373831;
+        }
+        .cm-s-eclipse .CodeMirror-matchingbracket {
+            text-decoration: underline;
+            color: #ff0000 !important;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script>
+        var variable = true
+        CodeMirror.defineMode("mylanguage", function() {
+            return {
+                token: function(stream, state) {
+                    if(stream.pos === 0) {
+                        variable = true
+                        stream.next();
+                    }
+                    if(stream.match(/=/)) {
+                        variable = false
+                        return null
+                    }
+                    // console.log(variable)
+                    if(stream.match(/[\{\[\(\}\]\)]/)) {
+                        return "group";
+                    }
+                    if(stream.match(/[0-9]+/)) {
+                        return "integer";
+                    }
+                    if(stream.match(/\\n|\\t|\\\.|\\s|\\r|\\\"|\\\'/)) {
+                        return "Char";
+                    }
+                    if(stream.match(/\"([^\n\"\\]|\\.)*\"/)) {
+                        return "String";
+                    }
+                    if(stream.match(/[\+\*\?\.\|]+/)) {
+                        return "operator";
+                    }
+                    if(stream.match(/[a-zA-Z$][\w$]*/)) {
+                        if(variable) {
+                            return "var-l";
+                        }
+                        return "var-r";
+                    }
+                    stream.next();
+                    return null;
+                }
+            };
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/focus/focus.min.js"></script>
+</head>
+<body>
+    <div id="code"></div>
+    <script>
+        var editor = CodeMirror(document.getElementById("code"), {
+            mode: "mylanguage",
+            theme: "eclipse",
+            value: `REGEX2 = (a.b.c)+|a?.x.y.z|(0|1)+
+REGEX1 = (1?.2*|3+.2*)|(2?.3+.1|3.1*)
+NUMBER = d+.(".".d+)?`,
+            lineNumbers: true,
+            indentUnit: 0,
+            indentWithTabs: true,
+            autoCloseBrackets: true,
+            matchBrackets: true,
+            styleActiveLine: true,
+            caseFold: true,
+        });
+    </script>
+</body>
+</html>
