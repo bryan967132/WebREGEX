@@ -2,15 +2,11 @@ body {
     font-family: Arial, sans-serif;
     font-size: 11pt;
     background-color: #393939;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 .workspace {
     display: grid;
-    grid-template-columns: 2fr 6fr;
-    height: 90vh;
+    grid-template-columns: repeat(2, 1fr);
+    height: 85vh;
 }
 .graphs {
     display: grid;
@@ -18,6 +14,7 @@ body {
 }
 .graph {
     height: 100%;
+    background-color: white;
 }
 .graph-m {
     height: 50%;
