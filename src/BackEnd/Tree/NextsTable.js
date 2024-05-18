@@ -15,16 +15,12 @@ class NextsTable {
             if(node.type === Type.CONCAT) {
                 for(const last of node.left.lasts) {
                     this.leafs.get(last).nexts = [...this.leafs.get(last).nexts, ...node.right.firsts]
-                    this.leafs.get(last).nexts.sort(function(a, b) {
-                        return a - b
-                    })
+                    this.leafs.get(last).nexts.sort((a, b) => a - b)
                 }
             } else if(node.type === Type.KLEENE || node.type === Type.POSITIVE) {
                 for(const last of node.left.lasts) {
                     this.leafs.get(last).nexts = [...this.leafs.get(last).nexts, ...node.left.firsts]
-                    this.leafs.get(last).nexts.sort(function(a, b) {
-                        return a - b
-                    })
+                    this.leafs.get(last).nexts.sort((a, b) => a - b)
                 }
             }
             this._calculateNexts(node.left)

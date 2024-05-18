@@ -83,29 +83,29 @@ class Tree {
         let nodes = "";
         for (const transition of this.table.transitions) {
             for (const [_, change] of transition.changes) {
-                nodes += `\n\tS${transition.state} -> S${change.toState}[label = "${this.terminals(change.terminal)}"];`;
+                nodes += `\n\tS${transition.state} -> S${change.toState}[label = "${this.terminals(change.terminal)}"];`
             }
             if (transition.accept) {
-                nodes += `\n\tS${transition.state}[peripheries = 2];`;
+                nodes += `\n\tS${transition.state}[peripheries = 2];`
             }
         }
         return nodes;
     }
 
     getDot = (name) => {
-        return `digraph Tree {\n\tgraph[fontname="Arial" labelloc=t];\n\tnode[shape=plaintext fontname="Arial"];\n\tedge[dir=none];\n\t${this.description(name)}${this.getDotNodes(this.root, 'CENTER')}\n}`;
+        return `digraph Tree {\n\tgraph[fontname="Arial" labelloc=t];\n\tnode[shape=plaintext fontname="Arial"];\n\tedge[dir=none];\n\t${this.description(name)}${this.getDotNodes(this.root, 'CENTER')}\n}`
     }
 
     description = (name) => {
-        return `label=<EXPRESIÓN REGULAR: ${name}<br/><font color="#0C7CBA">IDENTIFICADORES</font><br align="left"/><font color="#CC0000">ANULABLES</font><br align="left"/><font color="#CC6600">PRIMEROS</font><br align="left"/><font color="#009900">ÚLTIMOS</font><br align="left"/>>;`;
+        return `label=<EXPRESIÓN REGULAR: ${name}<br/><font color="#0C7CBA">IDENTIFICADORES</font><br align="left"/><font color="#CC0000">ANULABLES</font><br align="left"/><font color="#CC6600">PRIMEROS</font><br align="left"/><font color="#009900">ÚLTIMOS</font><br align="left"/>>;`
     }
 
     terminals = (terminal) => {
-        return (terminal === " " ? "&#92;&#92;s" : (terminal === "\\n" ? "&#92;&#92;n" : terminal));
+        return (terminal === " " ? "&#92;&#92;s" : (terminal === "\\n" ? "&#92;&#92;n" : terminal))
     }
 
     getDotNodes = (node, align) => {
-        var dot = "";
+        var dot = ""
         if(node != null) {
             dot += "\n\t" + this.getStructN(node, align)
             if(node.left != null) {
@@ -117,7 +117,7 @@ class Tree {
                 dot += `\n\tnode${node.id}:p${node.id} -> node${node.right.id}:p${node.right.id};`
             }
         }
-        return dot;
+        return dot
     }
 
     getStructN = (node, align) => {
@@ -129,10 +129,10 @@ class Tree {
     }
 
     getFirsts = (node) => {
-        return node.firsts.length > 0 ? node.firsts.join(", ") : "";
+        return node.firsts.length > 0 ? node.firsts.join(",") : ""
     }
 
     getLasts = (node) => {
-        return node.lasts.length > 0 ? node.lasts.join(", ") : "";
+        return node.lasts.length > 0 ? node.lasts.join(",") : ""
     }
 }
