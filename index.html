@@ -13,7 +13,34 @@
     <title>Lexical</title>
 </head>
 <body>
-    <div></div>
+    <div class="optionsspace">
+        <div></div>
+        <div class="optionsspace">
+            <div class="optionsspace radios">
+                <div>
+                    <input name="graph" type="radio" onclick="renderGraph('tree')" id="tree" value="tree" checked>
+                    <label for="tree">Árbol</label>
+                </div>
+                <div>
+                    <input name="graph" type="radio" onclick="renderGraph('afd')" id="afd" value="afd">
+                    <label for="afd">AFD</label>
+                </div>
+                <div>
+                    <input name="graph" type="radio" onclick="renderGraph('nexts')" id="nexts" value="nexts">
+                    <label for="nexts">Siguientes</label>
+                </div>
+                <div>
+                    <input name="graph" type="radio" onclick="renderGraph('afnd')" id="afnd" value="afnd">
+                    <label for="afnd">AFND</label>
+                </div>
+                <div>
+                    <input name="graph" type="radio" onclick="renderGraph('transitions')" id="transitions" value="transitions">
+                    <label for="transitions">Transiciones</label>
+                </div>
+            </div>
+            <div></div>
+        </div>
+    </div>
     <div class="workspace">
         <div id="editor"></div>
         <div id="results">
