@@ -1,6 +1,26 @@
+var graphs = JSON.parse(localStorage.getItem('graphs'))
+if(!graphs) {
+    localStorage.setItem('graphs', JSON.stringify({
+        tree: '',
+        nexts: '',
+        transitions: '',
+        afd: '',
+        afnd: '',
+    }))
+    graphs = JSON.parse(localStorage.getItem('graphs'))
+} else if(graphs.tree !== '') {
+    document.getElementById('results').innerHTML = '<div id="graph" class="graph"></div>'
+    d3.select('#graph')
+    .graphviz()
+    .scale(0.5)
+    .height(600*.45)
+    .width(document.getElementById('graph').clientWidth)
+    .height(document.getElementById('graph').clientHeight)
+    .renderDot(JSON.parse(localStorage.getItem('graphs')).tree)
+}
+
 document.addEventListener('keyup', (_) => {
     const keyCode = event.keyCode
-    console.log(keyCode)
     if (
         keyCode >= 48 && keyCode <= 57 ||
         keyCode >= 65 && keyCode <= 90 ||
@@ -13,6 +33,41 @@ document.addEventListener('keyup', (_) => {
     }
 });
 
+renderGraph = (id) => {
+    console.log(id)
+    var graphs = JSON.parse(localStorage.getItem('graphs'))
+    switch(id) {
+        case 'tree':
+            document.getElementById('results').innerHTML = '<div id="graph" class="graph"></div>'
+            d3.select('#graph')
+            .graphviz()
+            .scale(0.5)
+            .height(600*.45)
+            .width(document.getElementById('graph').clientWidth)
+            .height(document.getElementById('graph').clientHeight)
+            .renderDot(graphs.tree)
+            break
+        case 'nexts':
+            document.getElementById('results').innerHTML = `${graphs.nexts}`
+            break
+        case 'transitions':
+            document.getElementById('results').innerHTML = `${graphs.transitions}`
+            break
+        case 'afd':
+            document.getElementById('results').innerHTML = '<div id="graph" class="graph"></div>'
+            d3.select('#graph')
+            .graphviz()
+            .scale(0.5)
+            .height(600*.45)
+            .width(document.getElementById('graph').clientWidth)
+            .height(document.getElementById('graph').clientHeight)
+            .renderDot(graphs.afd)
+            break
+        default:
+            document.getElementById('results').innerHTML = ``
+    }
+}
+
 parse = () => {
     const nodes = Parser.parse(editor.getValue())
     if(nodes.length > 0) {
@@ -21,7 +76,11 @@ parse = () => {
         tree.calculateLasts()
         tree.calculateNexts()
         tree.calculateTransitions()
-        // document.getElementById('regex').innerHTML = `${nodes[0][0]} -> ${tree.getRegex()}`
+        var graphs = JSON.parse(localStorage.getItem('graphs'))
+        graphs.tree = tree.getDot(nodes[0][0])
+        graphs.nexts = tree.nexts.getHTML()
+        graphs.transitions = tree.table.getHTML()
+        graphs.afd = tree.getDotAFD(nodes[0][0])
         document.getElementById('results').innerHTML = '<div id="graph" class="graph"></div>'
         d3.select('#graph')
         .graphviz()
@@ -29,15 +88,7 @@ parse = () => {
         .height(600*.45)
         .width(document.getElementById('graph').clientWidth)
         .height(document.getElementById('graph').clientHeight)
-        .renderDot(tree.getDot(nodes[0][0]))
-        // document.getElementById('graph2').innerHTML = `<p class="table-title">Tabla De Siguientes</p><p class="table-title">Expresión Regular: ${nodes[0][0]}</p>${tree.nexts.getHTML()}`
-        // document.getElementById('graph3').innerHTML = `<p class="table-title">Tabla De Transiciones</p><p class="table-title">Expresión Regular: ${nodes[0][0]}</p>${tree.table.getHTML()}`
-        // d3.select('#graph4')
-        // .graphviz()
-        // .scale(0.6)
-        // .height(600*.45)
-        // .width(document.getElementById('graph4').clientWidth)
-        // .height(document.getElementById('graph4').clientHeight)
-        // .renderDot(tree.getDotAFD(nodes[0][0]))
+        .renderDot(graphs.tree)
+        localStorage.setItem('graphs', JSON.stringify(graphs))
     }
 }
